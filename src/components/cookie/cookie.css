@@ -1,0 +1,13 @@
+.containerCookie {
+    bottom: 0;
+    align-items: baseline;
+    background: rgb(53, 53, 53);
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    left: 0;
+    position: fixed;
+    width: 500px;
+    z-index: 999;
+}

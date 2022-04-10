@@ -2,7 +2,8 @@
     border: none;
     outline: none;
     padding: 12px 16px;
-    background-color: #f1f1f1;
+    background-color: transparent;
     cursor: pointer;
     margin: 5px;
+    position:relative;
 }
