@@ -1,11 +1,23 @@
 import React, { memo, useState } from 'react';
 import './upload-gally-images.css';
+import { uid } from 'uid';
 
-
-const UploadGalleryImages = () => {
+export const AllFiles = () => {
   const [images, setImages] = useState([]);
 
-  const [currentImage, setCurrentImage] = useState(null)
+  return (
+      <UploadGalleryImages
+          images={images}
+          setImages={setImages}
+      />
+  )
+}
+
+
+const UploadGalleryImages = ({images, setImages}) => {
+
+  const [currentImage, setCurrentImage] = useState(null);
+  const [errors, setErrors] = useState(null);
 
   const deleteImageHandler = (imgDelete) => {
     setImages(images.filter((img) => img !== imgDelete));
@@ -18,9 +30,16 @@ const UploadGalleryImages = () => {
     const selectedFilesArray = Array.from(selectedFiles);
 
     if (images.length + selectedFilesArray.length > 10) return;
+    if(selectedFilesArray.every(file => file.size > 2097150)) {
+      setErrors('Error!');
+      return;
+    }
 
-    console.log(selectedFilesArray); // можно взять размер файла
+    console.log('selectedFilesArray', selectedFilesArray); // можно взять размер файла
+
     const createdObjUrl = selectedFilesArray.map((file,index) => ({
+      id: uid(),
+      file,
       picture: URL.createObjectURL(file),
       order: index + images.length,
     }));
@@ -29,7 +48,10 @@ const UploadGalleryImages = () => {
       ...prev,
       ...createdObjUrl,
     ]);
+    setErrors(null);
   };
+
+  console.log(errors);
 
   function dragStartHandler(e, img) {
     console.log('img', img);
@@ -59,8 +81,8 @@ const UploadGalleryImages = () => {
     }))
   }
 
-  const sortCards = (a,b) =>{
-    return a.order > b.order ? 1 : -1;
+  const sortCards = (a, b) =>{
+    return a.order - b.order;
   }
 
   const finallyUploadClass = images.length
