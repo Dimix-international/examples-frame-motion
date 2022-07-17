@@ -2,6 +2,7 @@ import {useState} from "react";
 import QRCode from "qrcode";
 import './style.css';
 
+//https://www.npmjs.com/package/qrcode
 export const GeneratorQR = () => {
     const [url, setUrl] = useState('')
     const [qr, setQr] = useState('')
